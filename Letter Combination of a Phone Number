@@ -1,0 +1,59 @@
+// Letter Combination of a Phone number
+import java.util.*;
+
+public class Solution {
+    
+    // Define the mappings for digits to letters
+    private static final String[] digitToLetters = {
+        "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"
+    };
+    
+    public List<String> letterCombinations(String digits) {
+        List<String> result = new ArrayList<>();
+        if (digits == null || digits.length() == 0) {
+            return result;  // If digits string is empty, return empty list
+        }
+        
+        // Call the backtracking helper function to generate combinations
+        backtrack(result, new StringBuilder(), digits, 0);
+        
+        return result;
+    }
+    
+    private void backtrack(List<String> result, StringBuilder currentCombination, String digits, int index) {
+        // If the current combination is of the same length as digits, add it to result
+        if (index == digits.length()) {
+            result.add(currentCombination.toString());
+            return;
+        }
+        
+        // Get the corresponding letters for the current digit
+        String letters = digitToLetters[digits.charAt(index) - '0'];
+        
+        // Try all possible letters for this digit
+        for (int i = 0; i < letters.length(); i++) {
+            // Add the current letter to the combination
+            currentCombination.append(letters.charAt(i));
+            
+            // Recursively build the next part of the combination
+            backtrack(result, currentCombination, digits, index + 1);
+            
+            // Backtrack by removing the last letter and trying the next one
+            currentCombination.deleteCharAt(currentCombination.length() - 1);
+        }
+    }
+    
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        
+        // Test case 1
+        String digits1 = "23";
+        System.out.println(solution.letterCombinations(digits1));
+        // Output: ["ad","ae","af","bd","be","bf","cd","ce","cf"]
+        
+        // Test case 2
+        String digits2 = "2";
+        System.out.println(solution.letterCombinations(digits2));
+        // Output: ["a","b","c"]
+    }
+}
