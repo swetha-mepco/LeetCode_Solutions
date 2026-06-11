@@ -1,0 +1,22 @@
+//Number of Common Factors
+class Solution {
+    public int commonFactors(int a, int b) {
+        int gcd = gcd(a, b);
+        int count = 0;
+        
+        // Count factors of gcd
+        for (int i = 1; i <= gcd; i++) {
+            if (gcd % i == 0) {
+                count++;
+            }
+        }
+        
+        return count;
+    }
+    
+    // Euclidean Algorithm
+    private int gcd(int x, int y) {
+        if (y == 0) return x;
+        return gcd(y, x % y);
+    }
+}
