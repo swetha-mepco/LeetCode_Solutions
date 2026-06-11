@@ -1,0 +1,53 @@
+// Permutation Sequence
+public class Solution {
+    public String getPermutation(int n, int k) {
+        // Factorial array to store factorials up to n!
+        int[] factorial = new int[n + 1];
+        factorial[0] = 1;
+        for (int i = 1; i <= n; i++) {
+            factorial[i] = factorial[i - 1] * i;
+        }
+
+        // Create a list of numbers from 1 to n
+        List<Integer> nums = new ArrayList<>();
+        for (int i = 1; i <= n; i++) {
+            nums.add(i);
+        }
+
+        // Decrement k to make it 0-indexed
+        k--;
+
+        StringBuilder sb = new StringBuilder();
+
+        // Build the k-th permutation
+        for (int i = n; i > 0; i--) {
+            // Find the index of the current digit
+            int index = k / factorial[i - 1];
+            sb.append(nums.get(index));
+            
+            // Remove the selected number from the list
+            nums.remove(index);
+            
+            // Update k to find the position in the smaller list
+            k %= factorial[i - 1];
+        }
+
+        return sb.toString();
+    }
+
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+
+        // Test case 1: n = 3, k = 3
+        int n1 = 3, k1 = 3;
+        System.out.println(solution.getPermutation(n1, k1));  // Output: "213"
+
+        // Test case 2: n = 4, k = 9
+        int n2 = 4, k2 = 9;
+        System.out.println(solution.getPermutation(n2, k2));  // Output: "2314"
+
+        // Test case 3: n = 3, k = 1
+        int n3 = 3, k3 = 1;
+        System.out.println(solution.getPermutation(n3, k3));  // Output: "123"
+    }
+}
