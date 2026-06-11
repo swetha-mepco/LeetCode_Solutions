@@ -1,0 +1,41 @@
+//Miin Stack
+public class MinStack {
+    // The main stack to store the values
+    private Stack<Integer> stack;
+    // The auxiliary stack to store the minimum values
+    private Stack<Integer> minStack;
+
+    /** Initialize your data structure here. */
+    public MinStack() {
+        stack = new Stack<>();
+        minStack = new Stack<>();
+    }
+
+    /** Push the value onto the stack. */
+    public void push(int val) {
+        stack.push(val);
+        // If minStack is empty, push the current value as the minimum
+        if (minStack.isEmpty()) {
+            minStack.push(val);
+        } else {
+            // Otherwise, push the minimum of val and the current top of minStack
+            minStack.push(Math.min(val, minStack.peek()));
+        }
+    }
+
+    /** Removes the element on the top of the stack. */
+    public void pop() {
+        stack.pop();
+        minStack.pop();
+    }
+
+    /** Get the top element of the stack. */
+    public int top() {
+        return stack.peek();
+    }
+
+    /** Retrieve the minimum element in the stack. */
+    public int getMin() {
+        return minStack.peek();
+    }
+}
