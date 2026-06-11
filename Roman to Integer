@@ -1,0 +1,33 @@
+// Roman to Integer
+class Solution {
+    public int romanToInt(String s) {
+        // Map to store the values of Roman numerals
+        int[] values = new int[128]; // Using an array for ASCII values
+        values['I'] = 1;
+        values['V'] = 5;
+        values['X'] = 10;
+        values['L'] = 50;
+        values['C'] = 100;
+        values['D'] = 500;
+        values['M'] = 1000;
+
+        int total = 0; // To store the total value
+        int prevValue = 0; // To keep track of the previous numeral's value
+
+        // Iterate through each character in the string
+        for (char c : s.toCharArray()) {
+            int currentValue = values[c]; // Get the value of the current numeral
+
+            // If the current value is greater than the previous value, we have a subtraction case
+            if (currentValue > prevValue) {
+                total += currentValue - 2 * prevValue; // Subtract twice the previous value
+            } else {
+                total += currentValue; // Otherwise, just add the current value
+            }
+
+            prevValue = currentValue; // Update the previous value
+        }
+
+        return total; // Return the total value
+    }
+}
