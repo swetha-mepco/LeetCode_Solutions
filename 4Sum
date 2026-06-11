@@ -1,0 +1,50 @@
+//4Sum
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class Solution {
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(nums); // Sort the array to facilitate the two-pointer technique
+
+        for (int i = 0; i < nums.length - 3; i++) {
+            // Skip duplicate values for the first element
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+
+            for (int j = i + 1; j < nums.length - 2; j++) {
+                // Skip duplicate values for the second element
+                if (j > i + 1 && nums[j] == nums[j - 1]) continue;
+
+                int lo = j + 1; // Left pointer
+                int hi = nums.length - 1; // Right pointer
+
+                while (lo < hi) {
+                    long sum = (long) nums[i] + nums[j] + nums[lo] + nums[hi]; // Use long to prevent overflow
+                    if (sum == target) {
+                        result.add(Arrays.asList(nums[i], nums[j], nums[lo], nums[hi]));
+                        // Skip duplicates for the third element
+                        while (lo < hi && nums[lo] == nums[lo + 1]) lo++;
+                        // Skip duplicates for the fourth element
+                        while (lo < hi && nums[hi] == nums[hi - 1]) hi--;
+                        lo++;
+                        hi--;
+                    } else if (sum < target) {
+                        lo++; // Move left pointer to the right to increase the sum
+                    } else {
+                        hi--; // Move right pointer to the left to decrease the sum
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        int[] nums = {1, 0, -1, 0, -2, 2};
+        int target = 0;
+        List<List<Integer>> quadruplets = solution.fourSum(nums, target);
+        System.out.println(quadruplets); // Output: [[-2, -1, 1, 2], [-2, 0, 0, 2], [-1, 0, 0, 1]]
+    }
+}
