@@ -1,0 +1,27 @@
+// Regular Expression Matching
+class Solution {
+    public boolean isMatch(String s, String p) {
+        return isMatchHelper(s, p, 0, 0);
+    }
+
+    private boolean isMatchHelper(String s, String p, int i, int j) {
+        // If we reach the end of the pattern
+        if (j == p.length()) {
+            return i == s.length();
+        }
+
+        // Check if the current characters match
+        boolean firstMatch = (i < s.length() && (s.charAt(i) == p.charAt(j) || p.charAt(j) == '.'));
+
+        // Handle '*' in the pattern
+        if (j + 1 < p.length() && p.charAt(j + 1) == '*') {
+            // Two possibilities:
+            // 1. We skip the '*' and the preceding character
+            // 2. We use the '*' to match one or more of the preceding character
+            return (isMatchHelper(s, p, i, j + 2) || (firstMatch && isMatchHelper(s, p, i + 1, j)));
+        } else {
+            // Move to the next character in both the string and the pattern
+            return firstMatch && isMatchHelper(s, p, i + 1, j + 1);
+        }
+    }
+}
