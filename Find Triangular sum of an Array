@@ -1,0 +1,23 @@
+//Find Triangular Sum of an Array
+class Solution {
+    public int triangularSum(int[] nums) {
+        int n = nums.length;
+        int[] comb = new int[n]; // to store current row of Pascal's triangle
+        comb[0] = 1;
+
+        // Compute binomial coefficients modulo 10 using Pascal's triangle
+        for (int i = 1; i < n; i++) {
+            comb[i] = 1;
+            for (int j = i - 1; j > 0; j--) {
+                comb[j] = (comb[j] + comb[j - 1]) % 10;
+            }
+        }
+
+        // Compute triangular sum
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            sum = (sum + nums[i] * comb[i]) % 10;
+        }
+        return sum;
+    }
+}
