@@ -1,0 +1,54 @@
+//Multiply Strings
+public class Solution {
+    
+    public String multiply(String num1, String num2) {
+        int len1 = num1.length();
+        int len2 = num2.length();
+        
+        // If either number is "0", the product is "0"
+        if (num1.equals("0") || num2.equals("0")) {
+            return "0";
+        }
+        
+        // Create an array to store the result of the multiplication
+        int[] result = new int[len1 + len2];
+        
+        // Multiply each digit of num1 with each digit of num2
+        for (int i = len1 - 1; i >= 0; i--) {
+            for (int j = len2 - 1; j >= 0; j--) {
+                int mul = (num1.charAt(i) - '0') * (num2.charAt(j) - '0');
+                int sum = mul + result[i + j + 1];
+                
+                // Store the sum in the correct position (handle carry)
+                result[i + j + 1] = sum % 10; // store the current digit
+                result[i + j] += sum / 10;    // add carry to the next position
+            }
+        }
+        
+        // Convert result array to string, skipping leading zeros
+        StringBuilder sb = new StringBuilder();
+        for (int num : result) {
+            if (!(sb.length() == 0 && num == 0)) { // skip leading zeros
+                sb.append(num);
+            }
+        }
+        
+        return sb.toString();
+    }
+
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        
+        // Test case 1
+        String num1 = "2", num2 = "3";
+        System.out.println(solution.multiply(num1, num2));  // Output: "6"
+        
+        // Test case 2
+        String num3 = "123", num4 = "456";
+        System.out.println(solution.multiply(num3, num4));  // Output: "56088"
+        
+        // Test case 3: edge case where one number is 0
+        String num5 = "0", num6 = "123";
+        System.out.println(solution.multiply(num5, num6));  // Output: "0"
+    }
+}
