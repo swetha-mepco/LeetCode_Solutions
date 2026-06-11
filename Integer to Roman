@@ -1,0 +1,38 @@
+// Integer to Roman
+public class Solution {
+
+    public String intToRoman(int num) {
+        // Define the Roman symbols and their corresponding integer values
+        String[] romanSymbols = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+        int[] values = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        
+        StringBuilder result = new StringBuilder();
+        
+        // Loop through the values and symbols to form the Roman numeral
+        for (int i = 0; i < values.length; i++) {
+            // While num is greater than or equal to the current value
+            while (num >= values[i]) {
+                result.append(romanSymbols[i]);
+                num -= values[i]; // Subtract the value
+            }
+        }
+        
+        return result.toString(); // Return the final Roman numeral as a string
+    }
+
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        
+        // Test case 1
+        int num1 = 3749;
+        System.out.println(solution.intToRoman(num1)); // Output: MMMDCCXLIX
+
+        // Test case 2
+        int num2 = 58;
+        System.out.println(solution.intToRoman(num2)); // Output: LVIII
+
+        // Test case 3
+        int num3 = 1994;
+        System.out.println(solution.intToRoman(num3)); // Output: MCMXCIV
+    }
+}
