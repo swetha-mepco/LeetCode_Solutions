@@ -1,0 +1,29 @@
+//Climbing Stairs
+class Solution {
+    public int climbStairs(int n) {
+        // Base cases
+        if (n == 1) return 1;
+        if (n == 2) return 2;
+
+        // Variables to store the number of ways to reach the previous two steps
+        int a = 1; // Ways to reach step 1
+        int b = 2; // Ways to reach step 2
+        int res = 0; // Variable to store the result
+
+        // Calculate the number of ways for each step from 3 to n
+        for (int i = 3; i <= n; i++) {
+            res = a + b; // Current step ways = ways to reach (n-1) + ways to reach (n-2)
+            a = b; // Move to the next step
+            b = res; // Update b to the current result
+        }
+
+        return res; // Return the total number of ways to reach the top
+    }
+
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        System.out.println(solution.climbStairs(2)); // Output: 2
+        System.out.println(solution.climbStairs(3)); // Output: 3
+        System.out.println(solution.climbStairs(4)); // Output: 5
+    }
+}
