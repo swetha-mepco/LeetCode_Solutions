@@ -1,0 +1,57 @@
+//Divide Two Integers
+public class Solution {
+    
+    public int divide(int dividend, int divisor) {
+        // Edge case: if dividend is Integer.MIN_VALUE and divisor is -1, return Integer.MAX_VALUE
+        if (dividend == Integer.MIN_VALUE && divisor == -1) {
+            return Integer.MAX_VALUE;
+        }
+
+        // Determine the sign of the result
+        boolean negative = (dividend < 0) != (divisor < 0);
+
+        // Work with absolute values to simplify the process
+        long absDividend = Math.abs((long) dividend);  // Use long to prevent overflow
+        long absDivisor = Math.abs((long) divisor);
+
+        int result = 0;
+        
+        // Perform division using repeated subtraction
+        while (absDividend >= absDivisor) {
+            long tempDivisor = absDivisor, multiple = 1;
+            
+            // Double the divisor until it is larger than the dividend
+            while (absDividend >= (tempDivisor << 1)) {
+                tempDivisor <<= 1;  // Double the divisor
+                multiple <<= 1;     // Double the multiple
+            }
+            
+            // Subtract the doubled divisor from the dividend
+            absDividend -= tempDivisor;
+            result += multiple;
+        }
+
+        // Apply the sign of the result
+        return negative ? -result : result;
+    }
+
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+
+        // Test case 1: dividend = 10, divisor = 3
+        int dividend1 = 10, divisor1 = 3;
+        System.out.println(solution.divide(dividend1, divisor1));  // Output: 3
+
+        // Test case 2: dividend = 7, divisor = -3
+        int dividend2 = 7, divisor2 = -3;
+        System.out.println(solution.divide(dividend2, divisor2));  // Output: -2
+
+        // Test case 3: dividend = -2147483648, divisor = -1
+        int dividend3 = -2147483648, divisor3 = -1;
+        System.out.println(solution.divide(dividend3, divisor3));  // Output: 2147483647 (edge case)
+
+        // Test case 4: dividend = -10, divisor = 3
+        int dividend4 = -10, divisor4 = 3;
+        System.out.println(solution.divide(dividend4, divisor4));  // Output: -3
+    }
+}
