@@ -1,0 +1,47 @@
+//Count and Say
+public class Solution {
+    
+    public String countAndSay(int n) {
+        // Base case
+        String result = "1";
+        
+        // Build the sequence iteratively for each value of n > 1
+        for (int i = 2; i <= n; i++) {
+            StringBuilder current = new StringBuilder();
+            int count = 1;
+            
+            // Iterate through the current result to build the next sequence
+            for (int j = 1; j < result.length(); j++) {
+                // If current character is the same as the previous, increase the count
+                if (result.charAt(j) == result.charAt(j - 1)) {
+                    count++;
+                } else {
+                    // Otherwise, append the count and the digit
+                    current.append(count).append(result.charAt(j - 1));
+                    count = 1; // Reset count for the new character
+                }
+            }
+            
+            // Append the last counted digit
+            current.append(count).append(result.charAt(result.length() - 1));
+            
+            // Update result to be the newly built string
+            result = current.toString();
+        }
+        
+        return result;
+    }
+
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        
+        // Test case 1: n = 4
+        System.out.println(solution.countAndSay(4));  // Output: "1211"
+
+        // Test case 2: n = 1
+        System.out.println(solution.countAndSay(1));  // Output: "1"
+        
+        // Test case 3: n = 5
+        System.out.println(solution.countAndSay(5));  // Output: "111221"
+    }
+}
