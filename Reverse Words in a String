@@ -1,0 +1,40 @@
+//Reverse Words in a String
+public class Solution {
+    public String reverseWords(String s) {
+        // Step 1: Trim the string to remove leading and trailing spaces
+        s = s.trim();
+
+        // Step 2: Split the string into words based on spaces
+        String[] words = s.split("\\s+");
+
+        // Step 3: Reverse the array of words
+        StringBuilder reversed = new StringBuilder();
+        for (int i = words.length - 1; i >= 0; i--) {
+            reversed.append(words[i]);
+
+            // Add a space if it is not the last word
+            if (i > 0) {
+                reversed.append(" ");
+            }
+        }
+
+        // Step 4: Return the reversed string
+        return reversed.toString();
+    }
+
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+
+        // Example 1:
+        String s1 = "the sky is blue";
+        System.out.println(solution.reverseWords(s1));  // Output: "blue is sky the"
+
+        // Example 2:
+        String s2 = "  hello world  ";
+        System.out.println(solution.reverseWords(s2));  // Output: "world hello"
+
+        // Example 3:
+        String s3 = "a good   example";
+        System.out.println(solution.reverseWords(s3));  // Output: "example good a"
+    }
+}
