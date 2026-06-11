@@ -1,0 +1,20 @@
+// Palindrome Number
+
+class Solution {
+    public boolean isPalindrome(int x) {
+        // Return false if the number is negative or ends with 0 (but is not 0 itself)
+        if (x < 0 || (x % 10 == 0 && x != 0)) {
+            return false;
+        }
+
+        int revertedNumber = 0;
+        // Keep reversing the second half of the number until it is greater or equal to the first half
+        while (x > revertedNumber) {
+            revertedNumber = revertedNumber * 10 + x % 10; // Add the last digit to revertedNumber
+            x /= 10; // Remove the last digit from x
+        }
+
+        // Check if the first half and the second half (or second half/10) are equal
+        return x == revertedNumber || x == revertedNumber / 10;
+    }
+}
