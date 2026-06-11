@@ -1,0 +1,41 @@
+// Valid Number
+import java.util.regex.*;
+
+public class Solution {
+    public boolean isNumber(String s) {
+        // Regular expression for a valid number
+        String regex = "^[+-]?((\\d+\\.?\\d*)|(\\.\\d+))([eE][+-]?\\d+)?$";
+        
+        // Compile the regular expression
+        Pattern pattern = Pattern.compile(regex);
+        
+        // Check if the string matches the regex
+        Matcher matcher = pattern.matcher(s.trim());  // Trim to handle leading/trailing spaces
+        
+        return matcher.matches();
+    }
+
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+
+        // Test case 1: Valid number "0"
+        String s1 = "0";
+        System.out.println(solution.isNumber(s1));  // Output: true
+
+        // Test case 2: Invalid number "e"
+        String s2 = "e";
+        System.out.println(solution.isNumber(s2));  // Output: false
+
+        // Test case 3: Invalid number "."
+        String s3 = ".";
+        System.out.println(solution.isNumber(s3));  // Output: false
+
+        // Test case 4: Valid number "+3.14e10"
+        String s4 = "+3.14e10";
+        System.out.println(solution.isNumber(s4));  // Output: true
+
+        // Test case 5: Invalid number "abc"
+        String s5 = "abc";
+        System.out.println(solution.isNumber(s5));  // Output: false
+    }
+}
