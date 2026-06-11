@@ -1,0 +1,26 @@
+//Number of Great Partitions
+class Solution {
+    public int countPartitions(int[] nums, int k) {
+        long sum = 0;
+        for (int x : nums) sum += x;
+        if (sum < 2L * k) return 0;
+
+        int MOD = 1_000_000_007;
+        long[] dp = new long[k];
+        dp[0] = 1;
+        for (int x : nums) {
+            for (int i = k - 1; i >= x; i--) {
+                dp[i] = (dp[i] + dp[i - x]) % MOD;
+            }
+        }
+
+        long invalid = 0;
+        for (long count : dp) invalid = (invalid + count) % MOD;
+
+        long total = 1;
+        for (int i = 0; i < nums.length; i++) total = (total * 2) % MOD;
+
+        long ans = (total - 2 * invalid) % MOD;
+        return (int) (ans < 0 ? ans + MOD : ans);
+    }
+}
