@@ -1,0 +1,38 @@
+//Triangle
+public class Solution {
+    public int minimumTotal(List<List<Integer>> triangle) {
+        int n = triangle.size();
+        
+        // Start from the second last row and move upwards
+        for (int row = n - 2; row >= 0; row--) {
+            for (int col = 0; col <= row; col++) {
+                // Update each element with the minimum path sum of the two possible next elements
+                int down = triangle.get(row + 1).get(col);
+                int diagonal = triangle.get(row + 1).get(col + 1);
+                triangle.get(row).set(col, triangle.get(row).get(col) + Math.min(down, diagonal));
+            }
+        }
+        
+        // The top element now contains the minimum path sum
+        return triangle.get(0).get(0);
+    }
+
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+
+        // Example 1: triangle = [[2], [3, 4], [6, 5, 7], [4, 1, 8, 3]]
+        List<List<Integer>> triangle1 = new ArrayList<>();
+        triangle1.add(Arrays.asList(2));
+        triangle1.add(Arrays.asList(3, 4));
+        triangle1.add(Arrays.asList(6, 5, 7));
+        triangle1.add(Arrays.asList(4, 1, 8, 3));
+
+        System.out.println(solution.minimumTotal(triangle1)); // Output: 11
+
+        // Example 2: triangle = [[-10]]
+        List<List<Integer>> triangle2 = new ArrayList<>();
+        triangle2.add(Arrays.asList(-10));
+
+        System.out.println(solution.minimumTotal(triangle2)); // Output: -10
+    }
+}
